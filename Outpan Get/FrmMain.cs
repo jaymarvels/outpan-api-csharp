@@ -13,6 +13,11 @@ namespace OutPanApiGet
         public FrmMain()
         {
             InitializeComponent();
+            var cred = GetCredentials();
+            if (!string.IsNullOrEmpty(cred))
+            {
+                txtApiValue.Text = cred;
+            }
         }
 
         private void btnGet_Click(object sender, EventArgs e)
@@ -51,25 +56,25 @@ namespace OutPanApiGet
                         ClearText();
                         SetTextOutPut(formatted);
                         break;
-                    case "Attributes":
+                    case "attributes":
                         var attrResult = JsonConvert.DeserializeObject<OutpanApiAttributesModel>(content);
                         var attrformatted = JsonConvert.SerializeObject(attrResult, Formatting.Indented);
                         ClearText();
                         SetTextOutPut(attrformatted);
                         break;
-                    case "Images":
+                    case "images":
                         var imageResult = JsonConvert.DeserializeObject<OutpanApiImageModel>(content);
                         var imgformatted = JsonConvert.SerializeObject(imageResult, Formatting.Indented);
                         ClearText();
                         SetTextOutPut(imgformatted);
                         break;
-                    case "Name":
+                    case "name":
                         var nameResult = JsonConvert.DeserializeObject<OutpanApiNameModel>(content);
                         var nameformatted = JsonConvert.SerializeObject(nameResult, Formatting.Indented);
                         ClearText();
                         SetTextOutPut(nameformatted);
                         break;
-                    case "Videos":
+                    case "videos":
                         var videoResult = JsonConvert.DeserializeObject<OutpanApiVideosModel>(content);
                         var videoformatted = JsonConvert.SerializeObject(videoResult, Formatting.Indented);
                         ClearText();
@@ -96,14 +101,14 @@ namespace OutPanApiGet
             {
                 return "";
             }
-            return cboRequestType.SelectedItem.ToString();
+            return cboRequestType.SelectedItem.ToString().ToLower();
         }
 
         public void SetCredetntials(string credentials)
         {
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             configuration.AppSettings.Settings["userCredentials"].Value = credentials;
-            configuration.Save();
+            configuration.Save(ConfigurationSaveMode.Minimal);
             ConfigurationManager.RefreshSection("appSettings");
         }
 
