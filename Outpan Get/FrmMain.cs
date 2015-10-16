@@ -48,25 +48,34 @@ namespace OutPanApiGet
                     case "":
                         var allResult = JsonConvert.DeserializeObject<OutpanApiAllModel>(content);
                         var formatted = JsonConvert.SerializeObject(allResult, Formatting.Indented);
-                        rTxtOutput.Clear();
-                        rTxtOutput.Text = formatted;
+                        ClearText();
+                        SetTextOutPut(formatted);
                         break;
                     case "Attributes":
                         var attrResult = JsonConvert.DeserializeObject<OutpanApiAttributesModel>(content);
+                        var attrformatted = JsonConvert.SerializeObject(attrResult, Formatting.Indented);
+                        ClearText();
+                        SetTextOutPut(attrformatted);
                         break;
                     case "Images":
                         var imageResult = JsonConvert.DeserializeObject<OutpanApiImageModel>(content);
+                        var imgformatted = JsonConvert.SerializeObject(imageResult, Formatting.Indented);
+                        ClearText();
+                        SetTextOutPut(imgformatted);
                         break;
                     case "Name":
                         var nameResult = JsonConvert.DeserializeObject<OutpanApiNameModel>(content);
+                        var nameformatted = JsonConvert.SerializeObject(nameResult, Formatting.Indented);
+                        ClearText();
+                        SetTextOutPut(nameformatted);
                         break;
                     case "Videos":
                         var videoResult = JsonConvert.DeserializeObject<OutpanApiVideosModel>(content);
-                        break;                      
+                        var videoformatted = JsonConvert.SerializeObject(videoResult, Formatting.Indented);
+                        ClearText();
+                        SetTextOutPut(videoformatted);
+                        break;
                 }
-
-                
-
             }
         }
 
@@ -116,6 +125,16 @@ namespace OutPanApiGet
             {
                 SetCredetntials(apikey);
             }
+        }
+
+        public void ClearText()
+        {
+            rTxtOutput.Clear();
+        }
+
+        public void SetTextOutPut(string formatted)
+        {
+            rTxtOutput.Text = formatted;
         }
     }
 }
